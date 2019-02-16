@@ -52,47 +52,18 @@ d3.csv("assets/data/data.csv").then(function(censusData, error) {
 
   // Configure a band scale for the horizontal axis with a padding of 0.1 (10%)
   var xLinearScale = d3.scaleLinear()
-    .domain([5, d3.max(censusData, d => d.poverty)+5])
+    .domain([5, d3.max(censusData, d => d.poverty)+3])
     .range([0, chartWidth]);
 
   // Create a linear scale for the vertical axis.
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(censusData, d => d.obesity)+10])
+    .domain([15, d3.max(censusData, d => d.obesity)+3])
     .range([chartHeight, 0]);
 
   // Create two new functions passing our scales in as arguments
   // These will be used to create the chart's axes
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
-
-  // // gridlines in x axis function
-  // function make_x_gridlines() {		
-  //   return d3.axisBottom(xLinearScale)
-  //       .ticks(5)
-  // }
-
-  // // gridlines in y axis function
-  // function make_y_gridlines() {		
-  //   return d3.axisLeft(yLinearScale)
-  //       .ticks(5)
-  // }
-
-  // // add the X gridlines
-  // svg.append("g")			
-  //   .attr("class", "grid")
-  //   .attr("transform", "translate(0," + chartHeight + ")")
-  //   .call(make_x_gridlines()
-  //       .tickSize(-chartHeight)
-  //       .tickFormat("")
-  //   )
-
-  // // add the Y gridlines
-  // svg.append("g")			
-  //   .attr("class", "grid")
-  //   .call(make_y_gridlines()
-  //       .tickSize(-chartWidth)
-  //       .tickFormat("")
-  //   )
 
   // Append two SVG group elements to the chartGroup area,
   // and create the bottom and left axes inside of them
@@ -112,8 +83,23 @@ d3.csv("assets/data/data.csv").then(function(censusData, error) {
     .attr("class", "scatter")
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.obesity))
-    .attr("r", 5)
-    .attr("fill", "blue");
+    .attr("r", 15)
+    .attr("fill", "blue")
+    .attr("opacity", 0.5);
+    
+  chartGroup.selectAll("#scatter")
+    .data(censusData)
+    .enter()
+    .append("text")
+    .attr("class", "heavy")
+    .attr("x", d => xLinearScale(d.poverty))
+    .attr("y", d => yLinearScale(d.obesity))
+    .attr("dx", -10)
+    .attr("dy", 5)
+    .text(d => d.abbr)
+    // .attr("r", 10)
+    // .attr("fill", "blue")
+    // .attr("opacity", 0.5);
 
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
