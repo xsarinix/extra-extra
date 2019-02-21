@@ -1,15 +1,11 @@
 body {
-  background-color: antiquewhite;
+  background-image: url('../images/background.jpg');
+  background-color: #020024;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
-
-/* .row {
-  background-color: aliceblue;
-}
-
-.col-content,
-.col-scatter {
-  background-color: white;
-} */
 
 .title-div {
   text-align: center;
